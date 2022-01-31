@@ -36,11 +36,11 @@ fn q_rsqrt(number: f32) -> f32 {
     y = number;
 
     // Evil floating point bit level hacking
-    i = unsafe { mem::transmute(y) };
+    i = y.to_bits() as i32;
 
     // What the fuck?
     i = 0x5f3759df - (i >> 1);
-    y = unsafe { mem::transmute(i) };
+    y = f32::from_bits(i as u32);
 
     // 1st iteration
     y = y * (THREEHALVES - (x2 * y * y));
